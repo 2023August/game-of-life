@@ -10,7 +10,6 @@ pipeline {
         stage('package') {
             tools { jdk 'JAVA_8_UBUNTU'}
             steps {
-                sh 'mvn package',
                 sh 'mvn clean'
             }
         }
