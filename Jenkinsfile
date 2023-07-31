@@ -10,7 +10,8 @@ pipeline {
         stage('package') {
             tools { jdk 'JAVA_8_UBUNTU'}
             steps {
-                sh 'mvn package'
+                sh 'mvn package',
+                sh 'mvn clean'
             }
         }
         stage('post build') {
@@ -20,9 +21,5 @@ pipeline {
                 junit testResults: '**/TEST-*.xml'                 
             }
         }
-        stage('destroy')
-            steps{
-                sh 'mvn clean'
-            }
     }
 }
