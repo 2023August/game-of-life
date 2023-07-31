@@ -20,5 +20,9 @@ pipeline {
                 junit testResults: '**/TEST-*.xml'                 
             }
         }
+        stage('destroy')
+            steps{
+                sh 'mvn clean'
+            }
     }
 }
