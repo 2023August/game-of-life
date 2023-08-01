@@ -1,6 +1,6 @@
 pipeline {
     agent { label 'MAVEN_JDK' }
-    triggers { cron('H/15 * * * *') }
+    triggers { pollSCM('H/30 * * * *') }
     stages {
         stage('vcs') {
             steps {
