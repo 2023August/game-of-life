@@ -12,7 +12,7 @@ pipeline {
         stage('package') {
             tools { jdk 'JAVA_8_UBUNTU'}
             steps {
-                sh "${params.MAVEN_GOAL}"
+                sh "mvn ${params.MAVEN_GOAL}"
             }
         }
         stage('post build') {
