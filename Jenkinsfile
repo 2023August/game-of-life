@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'MAVEN_JDK' }
     triggers { pollSCM('H/30 * * * *') }
-    parameters { choice(name: 'MAVEN_GOAL', choices: ['package', 'clean', 'install ']) }
+    parameters { choice(name: 'MAVEN_GOAL', choices: ['package', 'clean', 'install']) }
     stages {
         stage('vcs') {
             steps {
@@ -12,7 +12,7 @@ pipeline {
         stage('package') {
             tools { jdk 'JAVA_8_UBUNTU'}
             steps {
-                sh " ${params.MAVEN_GOAL}"
+                sh "mvn ${params.MAVEN_GOAL}"
             }
         }
         stage('post build') {
