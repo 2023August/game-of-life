@@ -15,6 +15,11 @@ pipeline {
                 sh "mvn ${params.MAVEN_GOAL}"
             }
         }
+        stage('copt the build'){
+            steps {
+                sh 'mkdir -p /tmp/${JOB_NAME}/${BUILD_ID}/ && cp  ./gameoflife-web/target/gameoflife.war /tmp/${JOB_NAME}/${BUILD_ID}/'
+            }
+        }
         stage('post build') {
             steps {
                 archiveArtifacts artifacts: '**/target/gameoflife.war',
