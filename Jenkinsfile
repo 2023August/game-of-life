@@ -15,17 +15,28 @@ pipeline {
                 sh "mvn ${params.MAVEN_GOAL}"
             }
         }
-        stage('copy the build') {
-            steps {
-                sh 'mkdir -p /tmp/${JOB_NAME}/${BUILD_ID}/ && cp ./gameoflife-web/target/gameoflife.war /tmp/${JOB_NAME}/${BUILD_ID}/'
-            }
-        }
         stage('post build') {
             steps {
                 archiveArtifacts artifacts: '**/target/gameoflife.war',
                                  onlyIfSuccessful: true
                 junit testResults: '**/TEST-*.xml'                 
             }
+        }
+    }
+    post {
+        success {
+            mail subject: 'jenkins build of ${JOB_NAME} with ${BUILD_ID} is success',
+                 body: 'Use this url $(BUILD_URL) for more info',
+                 to: '$(GIT_AUTHOR_EMAIL)',
+                 from: 'naveen@gmail.com'
+            
+        }
+        failure {
+            mail subject: 'jenkins build of ${JOB_NAME} with ${BUILD_ID} fails',
+                 body: 'Use this url $(BUILD_URL) for more info',
+                 to: '$(GIT_AUTHOR_EMAIL)',
+                 from: 'naveen@gmail.com'
+            
         }
     }
 }
